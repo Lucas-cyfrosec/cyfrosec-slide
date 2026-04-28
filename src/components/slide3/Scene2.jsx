@@ -50,7 +50,7 @@ export default function Scene2({ state, counterRefs }) {
                   <div className="node-core" />
                   <div className="node-line" />
                   <div className="node-line short" />
-                  <div className="node-label">API</div>
+                  <div className="node-label">Network Scan</div>
                 </div>
                 <div className="node node-iam" style={{ '--node-delay': '590ms' }}>
                   <div className="node-core" />

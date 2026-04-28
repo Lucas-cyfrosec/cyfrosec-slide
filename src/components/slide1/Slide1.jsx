@@ -1,4 +1,6 @@
 import { GridPixelateWipe } from '../ui/grid-pixelate-wipe'
+import logoImg from './imgs/logo.png'
+import logo2Img from './imgs/logo2.png'
 
 const FONT_FAMILY =
   'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
@@ -168,7 +170,7 @@ function FinalScene() {
         }}
       >
         <img
-          src="/images/logo.png"
+          src={logoImg}
           alt="CyfroSec — Bridging Gaps. Securing Futures."
           style={{
             width: 1000,
@@ -179,7 +181,7 @@ function FinalScene() {
         />
 
         <img
-          src="/images/logo2.png"
+          src={logo2Img}
           alt="HAYAT Telecommunications"
           style={{
             width: 380,

@@ -9,11 +9,19 @@ import Slide7 from './components/slide7/Slide7'
 import Slide8 from './components/slide8/Slide8'
 import Slide9 from './components/slide9/Slide9'
 import Slide10 from './components/slide10/Slide10'
-import Slide11 from './components/slide11/Slide11'
-import Slide12 from './components/slide12/Slide12'
 
-const TOTAL_SLIDES = 12
-const BUILT_SLIDES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+const VISIBLE_SLIDES = [
+  { value: 1, label: 1 },
+  { value: 2, label: 2 },
+  { value: 3, label: 3 },
+  { value: 4, label: 4 },
+  { value: 5, label: 5 },
+  { value: 6, label: 6 },
+  { value: 7, label: 7 },
+  { value: 8, label: 8 },
+  { value: 9, label: 9 },
+  { value: 10, label: 10 },
+]
 
 function fitSlide() {
   const switcherH = 56  // switcher height + gap
@@ -48,8 +56,6 @@ export default function App() {
     if (currentSlide === 8) return <Slide8 />
     if (currentSlide === 9) return <Slide9 />
     if (currentSlide === 10) return <Slide10 />
-    if (currentSlide === 11) return <Slide11 />
-    if (currentSlide === 12) return <Slide12 />
     return (
       <main id="slide" className="slide is-ready slide-placeholder">
         <div className="placeholder-label">Slide {currentSlide}</div>
@@ -64,24 +70,20 @@ export default function App() {
       </div>
 
       <nav className="slide-switcher" aria-label="Slide navigation">
-        {Array.from({ length: TOTAL_SLIDES }, (_, i) => {
-          const n = i + 1
-          const isBuilt = BUILT_SLIDES.includes(n)
-          const isActive = currentSlide === n
+          {VISIBLE_SLIDES.map(({ value, label }) => {
+          const isActive = currentSlide === value
           return (
             <button
-              key={n}
+              key={value}
               className={[
                 'slide-btn',
                 isActive ? 'is-active' : '',
-                !isBuilt ? 'is-disabled' : '',
               ].filter(Boolean).join(' ')}
-              onClick={() => isBuilt && setCurrentSlide(n)}
-              disabled={!isBuilt}
-              aria-label={`Slide ${n}`}
+              onClick={() => setCurrentSlide(value)}
+              aria-label={`Slide ${label}`}
               aria-current={isActive ? 'true' : undefined}
             >
-              {n}
+              {label}
             </button>
           )
         })}

@@ -33,7 +33,7 @@ export default function Scene1({ state }) {
             <h2>CyfroCode catches vulnerabilities before they ship</h2>
             <p>
               Security checks run inline with your IDE and CI pipeline, surfacing risks
-              as you write and auto-generating compliant patches.
+              as you write and generating suggested patches for manual review.
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export default function Scene1({ state }) {
               <span className="dot red" />
               <span className="dot amber" />
               <span className="dot green" />
-              <span className="file-pill">auth/session.ts</span>
+              <span className="file-pill">routes/login.js</span>
               <div className="editor-meta">
                 <span className="status-pill info">Scanning</span>
               </div>
@@ -56,62 +56,56 @@ export default function Scene1({ state }) {
               <div className="code-line">
                 <span className="num">14</span>
                 <span className="code-text" style={{ '--type-delay': '760ms' }}>
-                  <span className="token-blue">export</span>{' '}
-                  <span className="token-purple">async function</span>{' '}
-                  <span className="token-green">createSession</span>() {'{'}
+                  <span className="token-green">app</span>.
+                  <span className="token-orange">post</span>(
+                  <span className="token-gray">'/login'</span>,{' '}
+                  <span className="token-purple">function</span> (req, res) {'{'}
                 </span>
               </div>
               <div className="code-line">
                 <span className="num">15</span>
                 <span className="code-text" style={{ '--type-delay': '940ms' }}>
                   &nbsp;&nbsp;<span className="token-purple">const</span>{' '}
-                  <span className="token-blue">token</span> ={' '}
-                  <span className="token-green">signJwt</span>(payload);
+                  <span className="token-blue">username</span> = req.body.username;
                 </span>
               </div>
               <div className="code-line vulnerable">
                 <span className="num">16</span>
                 <span className="code-text" style={{ '--type-delay': '1120ms' }}>
-                  &nbsp;&nbsp;<span className="token-purple">return</span>{' '}
-                  <span className="token-orange">db.query</span>(
+                  &nbsp;&nbsp;<span className="token-orange">sequelize.query</span>(
                   <span className="token-gray">
-                    "SELECT * FROM users WHERE id = " + input
+                    'SELECT * FROM Products WHERE name LIKE '
                   </span>
-                  );
+                  {' '}+ username);
                 </span>
               </div>
               <div className="code-line">
                 <span className="num">17</span>
                 <span className="code-text" style={{ '--type-delay': '1300ms' }}>
-                  &nbsp;&nbsp;<span className="token-blue">logger</span>.
-                  <span className="token-green">info</span>(
-                  <span className="token-gray">"session created"</span>);
+                  {'}'})
                 </span>
               </div>
               <div className="code-line">
                 <span className="num">18</span>
-                <span className="code-text" style={{ '--type-delay': '1480ms' }}>{'}'}</span>
+                <span className="code-text" style={{ '--type-delay': '1480ms' }} />
               </div>
               <div className="code-line">
                 <span className="num">19</span>
-                <span className="code-text" style={{ '--type-delay': '1660ms' }} />
+                <span className="code-text" style={{ '--type-delay': '1660ms' }}>
+                  <span className="token-orange">sequelize.query</span>(
+                </span>
               </div>
               <div className="code-line">
                 <span className="num">20</span>
                 <span className="code-text" style={{ '--type-delay': '1840ms' }}>
-                  <span className="token-blue">const</span>{' '}
-                  <span className="token-green">safeQuery</span> ={' '}
-                  <span className="token-orange">db.query</span>(
-                  <span className="token-gray">
-                    "SELECT * FROM users WHERE id = ?"
-                  </span>
-                  , [input]);
+                  &nbsp;&nbsp;<span className="token-gray">'SELECT * FROM Products WHERE name LIKE ?'</span>,
+                  {' '}{'{ '}replacements: [username]{' }{}'};
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="risk-badge">Vulnerable query detected</div>
+          <div className="risk-badge">SQL injection risk · CWE-89</div>
 
           <div className="code-right">
             <div
@@ -121,15 +115,15 @@ export default function Scene1({ state }) {
             >
               <span className="panel-kicker">CyfroCode</span>
               <div className="module-title">
-                <span className="module-logo">Auto-Remediation</span>
-                <span className="status-pill success">Fixed</span>
+                <span className="module-logo">Patch Generation</span>
+                <span className="status-pill info">Suggested</span>
               </div>
               <div className="scan-copy">
-                Auto-remediation generated for unsafe database access. Suggested patch
-                aligns with secure coding rules and deployment policy.
+                Patch generated for unsafe Sequelize query. Review and apply the
+                suggested fix to use parameterized replacements.
               </div>
               <div className="progress-track" aria-hidden="true" />
-              <div className="remediation-chip">Auto-remediation generated</div>
+              <div className="remediation-chip">Patch ready to apply</div>
             </div>
 
             <div
@@ -158,7 +152,7 @@ export default function Scene1({ state }) {
           </div>
 
           <p className="caption reveal-up" style={{ '--delay': '4200ms' }}>
-            CyfroCode catches vulnerabilities before they ship
+            CyfroCode catches vulnerabilities and suggests patches for manual review
           </p>
         </div>
       </div>

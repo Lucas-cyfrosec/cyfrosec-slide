@@ -1,4 +1,5 @@
 import insightImg from './img/insight.png'
+import cyfroCodeImg from './img/cyfro-code.png'
 
 export default function Scene3({ state, riskScoreRef }) {
   return (
@@ -59,23 +60,47 @@ export default function Scene3({ state, riskScoreRef }) {
 
                   <div className="recommendations">
                     <div className="rec" style={{ '--rec-delay': '1280ms' }}>
-                      <span className="chip chip-critical">Critical</span>
-                      <strong>Patch exposed service</strong>
-                      <span className="state">Queued</span>
+                      <div className="rec-header">
+                        <span className="chip chip-critical">Critical</span>
+                        <span className="rec-id">auth/session.ts · SQL Injection</span>
+                      </div>
+                      <strong>Unsafe query built with string concatenation</strong>
+                      <div className="rec-action">
+                        <span className="rec-action-label">Fix</span>
+                        <code>Use parameterized query: db.query(sql, [params])</code>
+                      </div>
                     </div>
                     <div className="rec" style={{ '--rec-delay': '1520ms' }}>
-                      <span className="chip chip-high">High</span>
-                      <strong>Restrict admin access</strong>
-                      <span className="state">Next</span>
+                      <div className="rec-header">
+                        <span className="chip chip-high">High</span>
+                        <span className="rec-id">gateway:8080 · Exposed Port</span>
+                      </div>
+                      <strong>Admin port open with no authentication</strong>
+                      <div className="rec-action">
+                        <span className="rec-action-label">Fix</span>
+                        <code>iptables -A INPUT -p tcp --dport 8080 -j DROP</code>
+                      </div>
                     </div>
                     <div className="rec" style={{ '--rec-delay': '1760ms' }}>
-                      <span className="chip chip-medium">Medium</span>
-                      <strong>Harden TLS configuration</strong>
-                      <span className="state">Plan</span>
+                      <div className="rec-header">
+                        <span className="chip chip-medium">Medium</span>
+                        <span className="rec-id">api-server · Weak TLS</span>
+                      </div>
+                      <strong>TLS 1.1 enabled — vulnerable to downgrade attacks</strong>
+                      <div className="rec-action">
+                        <span className="rec-action-label">Fix</span>
+                        <code>ssl_protocols TLSv1.2 TLSv1.3; in nginx.conf</code>
+                      </div>
                     </div>
                   </div>
                 </div>
 
+                <p className="caption reveal-up" style={{ '--delay': '3080ms' }}>
+                  CyfroAI Insights prioritizes fixes and validates compliance
+                </p>
+              </div>
+
+              <div className="scene-right">
                 <div className="gdpr-card" aria-label="GDPR Compliance Check Passed">
                   <div className="gdpr-top">
                     <div className="check-ring" aria-hidden="true">
@@ -103,12 +128,6 @@ export default function Scene3({ state, riskScoreRef }) {
                   </div>
                 </div>
 
-                <p className="caption reveal-up" style={{ '--delay': '3080ms' }}>
-                  CyfroAI Insights prioritizes fixes and validates compliance
-                </p>
-              </div>
-
-              <div className="scene-right">
                 <div className="secure-banner">
                   <div className="secure-grid" aria-hidden="true" />
                   <div className="secure-head">
@@ -116,10 +135,7 @@ export default function Scene3({ state, riskScoreRef }) {
                     <span>Secure State</span>
                   </div>
                   <div className="secure-lock" aria-hidden="true">
-                    <svg viewBox="0 0 32 32">
-                      <path d="M16 3.5 26 7.8V15c0 7-4 11.7-10 13.5C10 26.7 6 22 6 15V7.8L16 3.5Z" />
-                      <path d="M11.5 16.2 14.7 19.5 21.2 12.6" />
-                    </svg>
+                    <img src={cyfroCodeImg} alt="CyfroSec" className="secure-lock-img" />
                   </div>
                   <div className="secure-copy">
                     <strong>Infrastructure Secured with CyfroSec</strong>
@@ -136,7 +152,23 @@ export default function Scene3({ state, riskScoreRef }) {
                       </svg>
                       AWS
                     </div>
-                    <div className="infra-logo-chip logo-docker" style={{ '--logo-delay': '3020ms' }}>
+                    <div className="infra-logo-chip logo-azure" style={{ '--logo-delay': '3020ms' }}>
+                      <svg className="logo-svg" viewBox="0 0 20 18" fill="none">
+                        <path d="M8.5 1L1.5 13.5h5L10 7l3 6.5H8l-1.5 3h11L11 1H8.5z" fill="#0078d4" opacity="0.9"/>
+                      </svg>
+                      Azure
+                    </div>
+                    <div className="infra-logo-chip logo-gcp" style={{ '--logo-delay': '3140ms' }}>
+                      <svg className="logo-svg" viewBox="0 0 20 18" fill="none">
+                        <path d="M10 3.5h2.4l1.6-2.5H6l-4 7h2.9L10 3.5z" fill="#ea4335"/>
+                        <path d="M14 3.5l2 3.5 2-3.5H14z" fill="#fbbc05"/>
+                        <path d="M16 7l2 3.5H12l2-3.5h2z" fill="#34a853"/>
+                        <path d="M14 10.5l-4 7-4-7h8z" fill="#4285f4"/>
+                        <path d="M6 10.5l-2-3.5H2l2 3.5h2z" fill="#ea4335"/>
+                      </svg>
+                      GCP
+                    </div>
+                    <div className="infra-logo-chip logo-docker" style={{ '--logo-delay': '3260ms' }}>
                       <svg className="logo-svg" viewBox="0 0 20 16" fill="none">
                         <rect x="1" y="6" width="3.2" height="2.8" rx="0.7" fill="#2496ed"/>
                         <rect x="5.4" y="3.2" width="3.2" height="2.8" rx="0.7" fill="#2496ed"/>
@@ -146,14 +178,7 @@ export default function Scene3({ state, riskScoreRef }) {
                       </svg>
                       Docker
                     </div>
-                    <div className="infra-logo-chip logo-k8s" style={{ '--logo-delay': '3140ms' }}>
-                      <svg className="logo-svg" viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="10" r="2.8" fill="#326ce5"/>
-                        <path d="M10 2v4M10 14v4M2 10h4M14 10h4M4.3 4.3l2.8 2.8M12.9 12.9l2.8 2.8M4.3 15.7l2.8-2.8M12.9 7.1l2.8-2.8" stroke="#326ce5" strokeWidth="1.6" strokeLinecap="round"/>
-                      </svg>
-                      Kubernetes
-                    </div>
-                    <div className="infra-logo-chip logo-server" style={{ '--logo-delay': '3260ms' }}>
+                    <div className="infra-logo-chip logo-server" style={{ '--logo-delay': '3380ms' }}>
                       <svg className="logo-svg" viewBox="0 0 20 18" fill="none">
                         <rect x="1.5" y="1.5" width="17" height="5" rx="1.5" stroke="#38d27a" strokeWidth="1.4"/>
                         <rect x="1.5" y="11.5" width="17" height="5" rx="1.5" stroke="#38d27a" strokeWidth="1.4"/>
