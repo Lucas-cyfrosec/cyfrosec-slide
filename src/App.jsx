@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Slide1 from './components/slide1/Slide1'
 import Slide2 from './components/slide2/Slide2'
 import Slide3 from './components/slide3/Slide3'
@@ -23,27 +23,56 @@ const VISIBLE_SLIDES = [
   { value: 10, label: 10 },
 ]
 
-function fitSlide() {
-  const switcherH = 56  // switcher height + gap
-  const pad = 24        // breathing room top + bottom
-  const scale = Math.min(
-    window.innerWidth / 1600,
-    (window.innerHeight - switcherH - pad) / 900
-  )
+function fitSlide(fullscreen = false) {
+  const vw = fullscreen ? screen.width : window.innerWidth
+  const vh = fullscreen ? screen.height : window.innerHeight
+  const switcherH = fullscreen ? 0 : 56
+  const pad = fullscreen ? 0 : 24
+  const scale = Math.min(vw / 1600, (vh - switcherH - pad) / 900)
+  const maxScale = fullscreen ? 10 : 1
   document.documentElement.style.setProperty(
     '--scale',
-    Math.max(0.05, Math.min(scale, 1)).toFixed(4)
+    Math.max(0.05, Math.min(scale, maxScale)).toFixed(4)
   )
 }
 
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(1)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+
+  const toggleFullscreen = useCallback(async () => {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen()
+    } else {
+      await document.exitFullscreen()
+    }
+  }, [])
 
   useEffect(() => {
-    fitSlide()
-    window.addEventListener('resize', fitSlide, { passive: true })
-    return () => window.removeEventListener('resize', fitSlide)
+    function onFullscreenChange() {
+      const fs = !!document.fullscreenElement
+      setIsFullscreen(fs)
+      fitSlide(fs)
+      setTimeout(() => fitSlide(fs), 120)
+    }
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
   }, [])
+
+  useEffect(() => {
+    fitSlide(isFullscreen)
+    function onResize() { fitSlide(isFullscreen) }
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => window.removeEventListener('resize', onResize)
+  }, [isFullscreen])
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'f' || e.key === 'F') toggleFullscreen()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [toggleFullscreen])
 
   function renderSlide() {
     if (currentSlide === 1) return <Slide1 />
@@ -63,22 +92,37 @@ export default function App() {
     )
   }
 
+  function handleFullscreenClick(e) {
+    if (!isFullscreen) return
+    if (e.clientX > window.innerWidth / 2) {
+      setCurrentSlide(s => Math.min(s + 1, VISIBLE_SLIDES.length))
+    } else {
+      setCurrentSlide(s => Math.max(s - 1, 1))
+    }
+  }
+
+  function handleFullscreenMouseMove(e) {
+    if (!isFullscreen) return
+    e.currentTarget.style.cursor = e.clientX > window.innerWidth / 2 ? 'e-resize' : 'w-resize'
+  }
+
   return (
-    <div className="app-root">
+    <div
+      className={['app-root', isFullscreen ? 'is-fullscreen' : ''].filter(Boolean).join(' ')}
+      onClick={handleFullscreenClick}
+      onMouseMove={handleFullscreenMouseMove}
+    >
       <div className="scale-shell">
         {renderSlide()}
       </div>
 
       <nav className="slide-switcher" aria-label="Slide navigation">
-          {VISIBLE_SLIDES.map(({ value, label }) => {
+        {VISIBLE_SLIDES.map(({ value, label }) => {
           const isActive = currentSlide === value
           return (
             <button
               key={value}
-              className={[
-                'slide-btn',
-                isActive ? 'is-active' : '',
-              ].filter(Boolean).join(' ')}
+              className={['slide-btn', isActive ? 'is-active' : ''].filter(Boolean).join(' ')}
               onClick={() => setCurrentSlide(value)}
               aria-label={`Slide ${label}`}
               aria-current={isActive ? 'true' : undefined}
@@ -87,6 +131,23 @@ export default function App() {
             </button>
           )
         })}
+
+        <button
+          className="slide-btn fullscreen-btn"
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          title={isFullscreen ? 'Exit fullscreen (F)' : 'Fullscreen (F)'}
+        >
+          {isFullscreen ? (
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" />
+            </svg>
+          )}
+        </button>
       </nav>
     </div>
   )

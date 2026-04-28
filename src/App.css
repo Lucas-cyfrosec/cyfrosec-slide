@@ -131,6 +131,57 @@
       border-color: rgba(0, 0, 0, 0.15);
     }
 
+    .is-fullscreen {
+      padding: 0;
+      gap: 0;
+      cursor: e-resize;
+    }
+
+    .is-fullscreen:has(.scale-shell:hover) {
+      cursor: e-resize;
+    }
+
+    .fullscreen-btn {
+      margin-left: 8px;
+      border-color: rgba(16, 188, 214, 0.22);
+    }
+
+    .fullscreen-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .is-fullscreen .slide-switcher {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999;
+      background: rgba(10, 20, 34, 0.72);
+      padding: 6px 12px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(16, 188, 214, 0.18);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    .is-fullscreen .slide-switcher:hover {
+      opacity: 1;
+    }
+
+    .is-fullscreen .slide-btn {
+      color: #c8dff0;
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(16, 188, 214, 0.22);
+    }
+
+    .is-fullscreen .slide-btn.is-active {
+      background: #10bcd6;
+      color: #fff;
+    }
+
     /* Placeholder for unbuilt slides */
     .slide-placeholder {
       background: #f0f4f7;
