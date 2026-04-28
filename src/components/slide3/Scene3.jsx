@@ -1,3 +1,5 @@
+import insightImg from './img/insight.png'
+
 export default function Scene3({ state, riskScoreRef }) {
   return (
     <section
@@ -32,7 +34,7 @@ export default function Scene3({ state, riskScoreRef }) {
                     <div className="stack">
                       <span className="panel-kicker">Prioritized Remediation</span>
                       <div className="panel-name">
-                        <img src="/images/insight.png" alt="" className="insight-logo" aria-hidden="true" />
+                        <img src={insightImg} alt="" className="insight-logo" aria-hidden="true" />
                         <span>CyfroAI Insights</span>
                       </div>
                     </div>

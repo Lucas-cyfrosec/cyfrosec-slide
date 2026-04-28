@@ -1,3 +1,5 @@
+import agentImg from './img/agent.webp'
+
 export default function Scene2({ state, counterRefs }) {
   return (
     <section
@@ -77,7 +79,7 @@ export default function Scene2({ state, counterRefs }) {
                 <div className="protected-core">
                   <span />
                   <div className="core-lock" aria-label="CyfroAgent">
-                    <img src="/images/agent.webp" alt="CyfroAgent" className="core-agent-img" />
+                    <img src={agentImg} alt="CyfroAgent" className="core-agent-img" />
                   </div>
                 </div>
               </div>
