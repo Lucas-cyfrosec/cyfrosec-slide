@@ -10,42 +10,56 @@ import waiYanPaingImg from './profile_imgs/wai_yan_paing.jpg'
 
 const teamMembers = [
   {
-    name: 'Mustafa Sakhai (Poland)',
+    name: 'Mustafa Sakhai',
+    country: 'Poland',
+    role: 'Founder & CEO',
+    roleColor: 'gold',
     description: [
-      'Founder & CEO, Head of Business Development',
+      'Head of Business Development',
       'PhD researcher in Autonomous systems',
       'Lecturer, AGH University of Krakow',
-      'Cisco Certified Internetwork Expert (CCIE) Security',
+      'CCIE Security',
     ],
     image: mustafaSakhaiImg,
   },
   {
-    name: 'Daniela Magellan Ramirez (Mexico)',
+    name: 'Daniela Magellan Ramirez',
+    country: 'Mexico',
+    role: 'Head of Engineering',
+    roleColor: 'cyan',
     description: [
-      'Head of Engineering',
       'Cisco Certified Network Professional (CCNP)',
     ],
     image: danielaImg,
   },
   {
-    name: 'Anup Raveen Jaison (India)',
+    name: 'Anup Raveen Jaison',
+    country: 'India',
+    role: 'Business Strategy',
+    roleColor: 'amber',
     description: [
-      'Head of Business Operations and Strategy',
+      'Head of Business Operations',
       'MBA, IE Business School, Spain',
-      'Cisco Certified DevNet and Network Associate',
+      'Cisco Certified DevNet Associate',
     ],
     image: anupImg,
   },
   {
-    name: 'Wojciech Górny (Poland)',
+    name: 'Wojciech Górny',
+    country: 'Poland',
+    role: 'Cybersecurity',
+    roleColor: 'green',
     description: [
       'Cybersecurity Specialist',
-      'Cisco Certificate Network Associate (CCNA)',
+      'Cisco CCNA',
     ],
     image: wojciechImg,
   },
   {
-    name: 'Mustafa Balimaz (Poland)',
+    name: 'Mustafa Balimaz',
+    country: 'Poland',
+    role: 'Support',
+    roleColor: 'slate',
     description: [
       'Support Specialist',
       'CCNP',
@@ -53,7 +67,10 @@ const teamMembers = [
     image: mustafaBalimazImg,
   },
   {
-    name: 'Maciej Wielgosz (Poland)',
+    name: 'Maciej Wielgosz',
+    country: 'Poland',
+    role: 'AI Research & Dev',
+    roleColor: 'purple',
     description: [
       'Head of AI Research & Development',
       'PhD and Professor, AGH University of Krakow',
@@ -61,7 +78,10 @@ const teamMembers = [
     image: maciejImg,
   },
   {
-    name: 'Sithu Kaung (Poland)',
+    name: 'Sithu Kaung',
+    country: 'Poland',
+    role: 'Backend · AI',
+    roleColor: 'cyan',
     description: [
       'Software Backend Developer',
       'AI Researcher',
@@ -69,41 +89,47 @@ const teamMembers = [
     image: kaungImg,
   },
   {
-    name: 'Min Khant Soe Oke (Poland)',
+    name: 'Min Khant Soe Oke',
+    country: 'Poland',
+    role: 'Backend',
+    roleColor: 'cyan',
     description: ['Software Backend Developer'],
     image: minImg,
   },
   {
-    name: 'Wai Yan Paing (Thailand)',
+    name: 'Wai Yan Paing',
+    country: 'Thailand',
+    role: 'Frontend',
+    roleColor: 'blue',
     description: ['Software Frontend Developer'],
     image: waiYanPaingImg,
   },
 ]
 
 function TeamMember({ member, index }) {
-  const initials = member.name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-
   return (
-    <article className="team-member" style={{ '--team-delay': `${240 + index * 110}ms` }}>
+    <article
+      className="team-member"
+      style={{ '--team-delay': `${200 + index * 90}ms`, '--dir': index % 2 === 0 ? '-1' : '1' }}
+    >
       <div className="team-member-visual">
         <div className="team-member-ring" aria-hidden="true" />
+        <div className="team-member-glow-ring" aria-hidden="true" />
         <div className="team-member-photo">
           {member.image ? (
             <img src={member.image} alt={member.name} />
           ) : (
             <span className="team-member-initials" aria-hidden="true">
-              {initials}
+              {member.name.split(' ').map(p => p[0]).join('').slice(0, 2)}
             </span>
           )}
         </div>
       </div>
 
       <div className="team-member-copy">
+        <span className={`team-role-badge role-${member.roleColor}`}>{member.role}</span>
         <h2>{member.name}</h2>
+        <span className="team-country">{member.country}</span>
         <div className="team-member-description">
           {member.description.map((line) => (
             <p key={line}>{line}</p>
@@ -120,9 +146,15 @@ export default function TeamSlide() {
 
   return (
     <section className="team-section" aria-labelledby="team-heading">
-      <h1 id="team-heading" className="team-heading">
-        Team
-      </h1>
+      {/* Decorative background orbs */}
+      <div className="team-bg-orb team-bg-orb-1" aria-hidden="true" />
+      <div className="team-bg-orb team-bg-orb-2" aria-hidden="true" />
+      <div className="team-bg-orb team-bg-orb-3" aria-hidden="true" />
+
+      <div className="team-heading-row">
+        <h1 id="team-heading" className="team-heading">Team</h1>
+        <div className="team-count-badge">{teamMembers.length} members · 5 countries</div>
+      </div>
 
       <div className="team-grid team-grid-top">
         {firstRow.map((member, index) => (

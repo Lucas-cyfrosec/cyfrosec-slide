@@ -2506,6 +2506,10 @@
   line-height: 1;
 }
 
+.dev-card .status-pill.info {
+  color: #0a6e88;
+}
+
 .typing-dot {
   display: inline-block;
   width: 7px;
@@ -5174,10 +5178,76 @@
 .team-section {
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background decorative orbs */
+.team-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: team-orb-drift 12s ease-in-out infinite alternate;
+}
+.team-bg-orb-1 {
+  width: 420px; height: 420px;
+  top: -120px; right: -80px;
+  background: radial-gradient(circle, rgba(16,188,214,0.10) 0%, transparent 70%);
+  animation-duration: 14s;
+}
+.team-bg-orb-2 {
+  width: 320px; height: 320px;
+  bottom: 40px; left: -60px;
+  background: radial-gradient(circle, rgba(167,139,250,0.09) 0%, transparent 70%);
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+.team-bg-orb-3 {
+  width: 240px; height: 240px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(56,210,122,0.06) 0%, transparent 70%);
+  animation-duration: 10s;
+  animation-delay: -3s;
+}
+@keyframes team-orb-drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(20px, 16px); }
+}
+.team-bg-orb-3 {
+  animation: team-orb-drift3 10s ease-in-out infinite alternate;
+}
+@keyframes team-orb-drift3 {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(1.15); }
+}
+
+/* Heading row */
+.team-heading-row {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.team-count-badge {
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #0a7a92;
+  background: rgba(16, 188, 214, 0.10);
+  border: 1px solid rgba(16, 188, 214, 0.22);
+  opacity: 0;
+  animation: team-heading-in 680ms cubic-bezier(0.16, 1, 0.3, 1) 400ms forwards;
 }
 
 .team-heading {
-  margin: 0 0 42px;
+  margin: 0;
   font-size: 58px;
   line-height: 1.02;
   font-weight: 700;
@@ -5212,21 +5282,58 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 18px 12px 16px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(16,188,214,0.10);
+  box-shadow: 0 4px 20px rgba(8,22,39,0.06);
+  backdrop-filter: blur(8px);
   opacity: 0;
-  transform: translateY(16px);
-  animation: team-member-in 760ms cubic-bezier(0.16, 1, 0.3, 1) var(--team-delay) forwards;
-  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform: translateX(calc(var(--dir, -1) * 28px)) translateY(18px);
+  animation: team-member-in 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--team-delay) forwards;
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 220ms ease, border-color 220ms ease, z-index 0ms;
 }
 
 .team-member:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px) scale(1.10);
+  box-shadow: 0 24px 52px rgba(16,188,214,0.22), 0 8px 20px rgba(8,22,39,0.12);
+  border-color: rgba(16,188,214,0.38);
+  z-index: 10;
+  position: relative;
 }
 
 .team-member-visual {
   position: relative;
-  width: 172px;
-  height: 172px;
-  margin-bottom: 16px;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 12px;
+}
+
+.team-member-glow-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(16,188,214,0.50),
+    rgba(167,139,250,0.30),
+    rgba(56,210,122,0.40),
+    rgba(16,188,214,0.50)
+  );
+  opacity: 0;
+  animation:
+    team-glow-in 800ms ease calc(var(--team-delay) + 200ms) forwards,
+    team-glow-spin 6s linear calc(var(--team-delay) + 800ms) infinite;
+  mask: radial-gradient(circle, transparent 62%, black 66%, black 100%);
+  -webkit-mask: radial-gradient(circle, transparent 62%, black 66%, black 100%);
+}
+@keyframes team-glow-in {
+  from { opacity: 0; }
+  to   { opacity: 0.85; }
+}
+@keyframes team-glow-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .team-member-ring {
@@ -5319,14 +5426,44 @@
   opacity: 0;
   transform: translateY(10px);
   animation: team-copy-in 620ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--team-delay) + 220ms) forwards;
+  width: 100%;
 }
 
+.team-role-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.role-gold   { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.30); color: #92600a; }
+.role-cyan   { background: rgba(16,188,214,0.10);  border: 1px solid rgba(16,188,214,0.28);  color: #0a6e88; }
+.role-amber  { background: rgba(251,146,60,0.12);  border: 1px solid rgba(251,146,60,0.28);  color: #9a4a10; }
+.role-green  { background: rgba(56,210,122,0.10);  border: 1px solid rgba(56,210,122,0.28);  color: #0d6635; }
+.role-purple { background: rgba(167,139,250,0.12); border: 1px solid rgba(167,139,250,0.28); color: #5b3fa6; }
+.role-blue   { background: rgba(96,165,250,0.12);  border: 1px solid rgba(96,165,250,0.28);  color: #1e52a0; }
+.role-slate  { background: rgba(100,116,139,0.10); border: 1px solid rgba(100,116,139,0.24); color: #3f5469; }
+
 .team-member-copy h2 {
-  margin: 0 0 4px;
+  margin: 0 0 2px;
   color: #111111;
-  font-size: 18px;
+  font-size: 15px;
   line-height: 1.18;
+  font-weight: 700;
+}
+
+.team-country {
+  display: block;
+  font-size: 11px;
+  color: #8a9bab;
   font-weight: 600;
+  margin-bottom: 7px;
+  letter-spacing: 0.04em;
 }
 
 .team-member-description {
@@ -5336,9 +5473,9 @@
 
 .team-member-description p {
   margin: 0;
-  color: #111111;
-  font-size: 13px;
-  line-height: 1.24;
+  color: #445a6a;
+  font-size: 11.5px;
+  line-height: 1.36;
 }
 
 .team-footer {
@@ -5392,13 +5529,16 @@
 }
 
 @keyframes team-member-in {
-  from {
+  0% {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateX(calc(var(--dir, -1) * 28px)) translateY(18px) scale(0.94);
   }
-  to {
+  60% {
     opacity: 1;
-    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0) scale(1);
   }
 }
 
