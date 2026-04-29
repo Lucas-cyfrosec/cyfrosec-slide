@@ -12,12 +12,9 @@
   },
   "dependencies": {
     "@ark-ui/react": "^5.36.2",
-    "@remotion/player": "^4.0.452",
-    "framer-motion": "^12.38.0",
     "lucide-react": "^1.11.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "remotion": "^4.0.452"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",

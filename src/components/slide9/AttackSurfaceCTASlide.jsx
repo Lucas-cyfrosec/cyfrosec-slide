@@ -23,21 +23,6 @@ function DashboardPlaceholder() {
   )
 }
 
-function QRPlaceholder() {
-  return (
-    <div className="cta-qr-pattern" aria-hidden="true">
-      <span className="cta-qr-corner cta-qr-corner-tl" />
-      <span className="cta-qr-corner cta-qr-corner-tr" />
-      <span className="cta-qr-corner cta-qr-corner-bl" />
-      <div className="cta-qr-grid">
-        {Array.from({ length: 36 }, (_, index) => (
-          <span key={index} className={index % 2 === 0 ? 'is-filled' : ''} />
-        ))}
-      </div>
-    </div>
-  )
-}
-
 export default function AttackSurfaceCTASlide() {
   return (
     <section className="cta-section" aria-labelledby="cta-heading">
