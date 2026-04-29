@@ -2,8 +2,12 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Scene1 from './Scene1'
 import Scene2 from './Scene2'
 import Scene3 from './Scene3'
+import Scene4 from './Scene4'
+import Scene5 from './Scene5'
+import Scene6 from './Scene6'
+import Scene7 from './Scene7'
 
-const SCENE_COUNT = 3
+const SCENE_COUNT = 7
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -22,6 +26,16 @@ function animateNumber(el, from, to, duration) {
   requestAnimationFrame(tick)
 }
 
+const PILL_LABELS = [
+  'Developer',
+  'CyfroCode',
+  'Build & Deploy',
+  'Runtime Guard',
+  'Threat Alert',
+  'Auto Response',
+  'Full Lifecycle',
+]
+
 export default function Slide3() {
   const counterRefs = useRef([])
   const riskScoreRef = useRef(null)
@@ -30,7 +44,7 @@ export default function Slide3() {
   const riskAnimStarted = useRef(false)
 
   const [slideReady, setSlideReady] = useState(false)
-  const [sceneStates, setSceneStates] = useState(['is-pre', 'is-pre', 'is-pre'])
+  const [sceneStates, setSceneStates] = useState(Array(SCENE_COUNT).fill('is-pre'))
   const [slideSceneClasses, setSlideSceneClasses] = useState([])
   const [progress, setProgress] = useState('0%')
   const [pillStates, setPillStates] = useState(
@@ -93,8 +107,8 @@ export default function Slide3() {
         return 'is-active'
       })
     )
-    if (index === 1) animateCounters()
-    if (index === 2) animateRiskScore()
+    if (index === 3) animateCounters()
+    if (index === 5) animateRiskScore()
   }, [updateProgress, animateCounters, animateRiskScore])
 
   const transitionTo = useCallback((nextIndex) => {
@@ -112,8 +126,8 @@ export default function Slide3() {
       })
     )
     updateProgress(nextIndex)
-    if (nextIndex === 1) animateCounters()
-    if (nextIndex === 2) animateRiskScore()
+    if (nextIndex === 3) animateCounters()
+    if (nextIndex === 5) animateRiskScore()
 
     window.setTimeout(() => {
       setSlideSceneClasses(['scene-' + (nextIndex + 1) + '-active'])
@@ -130,13 +144,17 @@ export default function Slide3() {
   useEffect(() => {
     setSlideReady(true)
     if (prefersReducedMotion) {
-      activateScene(2); animateCounters(); animateRiskScore(); return
+      activateScene(6); animateCounters(); animateRiskScore(); return
     }
     setProgress('6%')
     setPillStates((prev) => { const next = [...prev]; next[0] = { current: true, complete: false }; return next })
     scheduleTransition(() => activateScene(0), 1000)
-    scheduleTransition(() => transitionTo(1), 6000)
-    scheduleTransition(() => transitionTo(2), 12000)
+    scheduleTransition(() => transitionTo(1), 8000)
+    scheduleTransition(() => transitionTo(2), 15000)
+    scheduleTransition(() => transitionTo(3), 22000)
+    scheduleTransition(() => transitionTo(4), 29000)
+    scheduleTransition(() => transitionTo(5), 36000)
+    scheduleTransition(() => transitionTo(6), 43000)
     return () => clearScheduledTransitions()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -158,11 +176,10 @@ export default function Slide3() {
       <div className="content">
         <header>
           <div className="header-shell">
-            <h1>From Code to Cloud Security</h1>
+            <h1>From Code to Cyber Resilience</h1>
             <p>
-              CyfroSec unifies developer security, infrastructure scanning, and AI-driven
-              remediation into one coherent workflow — from the first commit to verified
-              production posture.
+              The NexaBank Story — Powered by CyfroSec: AI-driven security from the first
+              commit to continuous runtime protection.
             </p>
           </div>
         </header>
@@ -170,34 +187,36 @@ export default function Slide3() {
         <div className="stage">
           <div className="continuity-line" aria-hidden="true" />
           <Scene1 state={sceneStates[0]} />
-          <Scene2 state={sceneStates[1]} counterRefs={counterRefs} />
-          <Scene3 state={sceneStates[2]} riskScoreRef={riskScoreRef} />
+          <Scene2 state={sceneStates[1]} />
+          <Scene3 state={sceneStates[2]} />
+          <Scene4 state={sceneStates[3]} counterRefs={counterRefs} />
+          <Scene5 state={sceneStates[4]} />
+          <Scene6 state={sceneStates[5]} riskScoreRef={riskScoreRef} />
+          <Scene7 state={sceneStates[6]} />
         </div>
 
         <div className="cinema-progress" aria-hidden="true">
           <div className="progress-track-shell" style={{ '--progress': progress }} />
-          {['Developer Workflow', 'Infrastructure Topology', 'Prioritized Remediation'].map(
-            (label, index) => {
-              const state = pillStates[index]
-              const cls = [
-                'progress-pill',
-                state.current ? 'is-current' : '',
-                state.complete ? 'is-complete' : '',
-              ].filter(Boolean).join(' ')
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  className={cls}
-                  aria-label={`Show scene ${index + 1}: ${label}`}
-                  aria-pressed={state.current ? 'true' : 'false'}
-                  onClick={() => handlePillClick(index)}
-                >
-                  {label}
-                </button>
-              )
-            }
-          )}
+          {PILL_LABELS.map((label, index) => {
+            const state = pillStates[index]
+            const cls = [
+              'progress-pill',
+              state.current ? 'is-current' : '',
+              state.complete ? 'is-complete' : '',
+            ].filter(Boolean).join(' ')
+            return (
+              <button
+                key={label}
+                type="button"
+                className={cls}
+                aria-label={`Show scene ${index + 1}: ${label}`}
+                aria-pressed={state.current ? 'true' : 'false'}
+                onClick={() => handlePillClick(index)}
+              >
+                {label}
+              </button>
+            )
+          })}
         </div>
       </div>
     </main>

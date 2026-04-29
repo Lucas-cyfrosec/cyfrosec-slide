@@ -1,142 +1,122 @@
-import agentImg from './img/agent.webp'
-
-export default function Scene2({ state, counterRefs }) {
+export default function Scene2({ state }) {
   return (
     <section
       id="scene-2"
-      className={`scene scene-infra ${state}`}
-      aria-label="Infrastructure Topology"
+      className={`scene scene-cyfrocode ${state}`}
+      aria-label="CyfroCode Shift Left Security"
     >
       <div className="scene-core">
         <div className="scene-grid" />
         <div className="scene-shell">
-          <div className="scene-label reveal-up" style={{ '--delay': '140ms' }}>
-            Infrastructure Topology
-          </div>
+          <div className="s2-layout">
+            <div className="scene-label reveal-up" style={{ '--delay': '100ms' }}>
+              Shift Left Security
+            </div>
 
-          <div className="scene-title reveal-up" style={{ '--delay': '260ms' }}>
-            <h2>CyfroAgent maps and monitors every live asset</h2>
-            <p>
-              Continuous agent-based discovery builds a real-time topology of your
-              cloud environment, tagging risk posture across all nodes.
+            <div className="s2-columns">
+              {/* Left: title + detection panel */}
+              <div className="s2-left">
+                <div className="scene-title s2-title reveal-up" style={{ '--delay': '200ms' }}>
+                  <h2>CyfroCode catches the bug before it ships</h2>
+                  <p>
+                    As Anna types, the AI security assistant inside her IDE analyses the
+                    code instantly and generates a safe, parameterized fix.
+                  </p>
+                </div>
+
+                <div className="detection-panel panel-rise" style={{ '--delay': '480ms' }}>
+                  <span className="panel-kicker">CyfroCode · AI Analysis</span>
+                  <div className="detection-title">
+                    <span>3 Issues Detected</span>
+                    <span className="status-pill error">Critical</span>
+                  </div>
+
+                  <div className="issue-list">
+                    <div className="issue-item" style={{ '--item-delay': '880ms' }}>
+                      <span className="issue-icon">!</span>
+                      Unsafe string concatenation in SQL query
+                    </div>
+                    <div className="issue-item" style={{ '--item-delay': '1060ms' }}>
+                      <span className="issue-icon">!</span>
+                      Missing input validation on user_input
+                    </div>
+                    <div className="issue-item" style={{ '--item-delay': '1240ms' }}>
+                      <span className="issue-icon">!</span>
+                      SQL Injection risk detected — CWE-89
+                    </div>
+                  </div>
+
+                  <div className="alert-quote">
+                    "Potential SQL Injection vulnerability detected. Recommended fix:
+                    use parameterized queries."
+                  </div>
+
+                  <div className="apply-fix-btn">
+                    ✓ Apply Fix
+                  </div>
+                  <div className="remediation-chip" style={{ marginTop: '10px' }}>Fix Applied · Commit Safe</div>
+                </div>
+              </div>
+
+              {/* Right: before / after code */}
+              <div className="s2-right">
+                <div className="code-comparison reveal-up" style={{ '--delay': '360ms' }}>
+                  <div className="code-block before-block panel-rise" style={{ '--delay': '600ms' }}>
+                    <div className="code-block-label">Before — Vulnerable</div>
+                    <div className="code-block-body">
+                      <div style={{ color: '#8ea3b8' }}>
+                        query = <span style={{ color: '#ffd3d5' }}>"SELECT * FROM users</span>
+                      </div>
+                      <div style={{ color: '#8ea3b8', paddingLeft: '8px' }}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#ffd3d5' }}>WHERE email = '"</span>
+                      </div>
+                      <div style={{ color: '#8ea3b8' }}>
+                        &nbsp;&nbsp;+ <span style={{ color: '#ffa07a' }}>user_input</span> + <span style={{ color: '#ffd3d5' }}>"'"</span>
+                      </div>
+                      <div style={{ marginTop: '8px', color: '#8ea3b8' }}>
+                        cursor.<span style={{ color: '#ffd19a' }}>execute</span>(query)
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="code-block after-block panel-rise" style={{ '--delay': '1600ms' }}>
+                    <div className="code-block-label">After — Secure</div>
+                    <div className="code-block-body">
+                      <div style={{ color: '#8ea3b8' }}>
+                        query = <span style={{ color: '#bff4d3' }}>"SELECT * FROM users</span>
+                      </div>
+                      <div style={{ color: '#8ea3b8', paddingLeft: '8px' }}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;<span style={{ color: '#bff4d3' }}>WHERE email = %s"</span>
+                      </div>
+                      <div style={{ marginTop: '8px', color: '#8ea3b8' }}>
+                        cursor.<span style={{ color: '#86e6a9' }}>execute</span>(
+                      </div>
+                      <div style={{ color: '#8ea3b8', paddingLeft: '8px' }}>
+                        &nbsp;&nbsp;query,{' '}
+                        <span style={{ color: '#bff4d3' }}>(user_input,)</span>
+                      </div>
+                      <div style={{ color: '#8ea3b8' }}>)</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="deploy-card reveal-up" style={{ '--delay': '2600ms', position: 'static', width: '100%', height: '80px', marginTop: '14px' }}>
+                  <div className="mini-server" aria-hidden="true">
+                    <span /><span /><span />
+                  </div>
+                  <div className="deploy-text">
+                    <strong>Commit to Git</strong>
+                    <small>Vulnerability eliminated · Safe to push</small>
+                  </div>
+                  <div className="deploy-pulse" aria-hidden="true" />
+                </div>
+              </div>
+            </div>
+
+            <p className="caption s2-caption reveal-up" style={{ '--delay': '3400ms' }}>
+              CyfroCode eliminates the vulnerability before it ever reaches the repository
             </p>
           </div>
-
-          <div className="telemetry-pill">Telemetry Live</div>
-
-          <div
-            className="topology-panel floating-card scale-in"
-            style={{ '--delay': '420ms' }}
-            aria-label="CyfroAgent Live Scan"
-          >
-            <div className="infra-head">
-              <div className="infra-title">
-                <strong>CyfroAgent Live Scan</strong>
-                <span>Production environment · us-east-1</span>
-              </div>
-              <span className="status-pill info live-chip">Scanning</span>
-            </div>
-            <div className="infra-body">
-              <div className="topology">
-                <svg>
-                  <line className="topology-line" x1="134" y1="90" x2="422" y2="72" />
-                  <line className="topology-line" x1="422" y1="72" x2="684" y2="146" />
-                  <line className="topology-line hot" x1="308" y1="202" x2="592" y2="224" />
-                  <line className="topology-line" x1="134" y1="90" x2="308" y2="202" />
-                  <line className="topology-line hot" x1="422" y1="72" x2="592" y2="224" />
-                  <line className="scan-beam" x1="134" y1="90" x2="684" y2="146" />
-                </svg>
-                <div className="node node-api" style={{ '--node-delay': '420ms' }}>
-                  <div className="node-core" />
-                  <div className="node-line" />
-                  <div className="node-line short" />
-                  <div className="node-label">Network Scan</div>
-                </div>
-                <div className="node node-iam" style={{ '--node-delay': '590ms' }}>
-                  <div className="node-core" />
-                  <div className="node-line" />
-                  <div className="node-line short" />
-                  <div className="node-label">IAM</div>
-                </div>
-                <div className="node node-db" style={{ '--node-delay': '760ms' }}>
-                  <div className="node-core" />
-                  <div className="node-line" />
-                  <div className="node-line short" />
-                  <div className="node-label">DB</div>
-                </div>
-                <div className="node node-app" style={{ '--node-delay': '920ms' }}>
-                  <div className="node-core" />
-                  <div className="node-line" />
-                  <div className="node-line short" />
-                  <div className="node-label">App</div>
-                </div>
-                <div className="node node-gw" style={{ '--node-delay': '1060ms' }}>
-                  <div className="node-core" />
-                  <div className="node-line" />
-                  <div className="node-line short" />
-                  <div className="node-label">Gateway</div>
-                </div>
-                <div className="protected-core">
-                  <span />
-                  <div className="core-lock" aria-label="CyfroAgent">
-                    <img src={agentImg} alt="CyfroAgent" className="core-agent-img" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="infra-findings panel-rise" style={{ '--delay': '1320ms' }} aria-label="Live vulnerability findings">
-                <div className="vuln-header">
-                  <span className="panel-kicker">Live Findings</span>
-                  <span className="status-pill error">3 Critical</span>
-                </div>
-                <div className="vuln-item" style={{ '--item-delay': '1520ms' }}>
-                  <span className="chip chip-critical">Critical</span>
-                  <div className="vuln-detail">
-                    <strong>SQL Injection</strong>
-                    <code>auth/session.ts · line 16</code>
-                  </div>
-                </div>
-                <div className="vuln-item" style={{ '--item-delay': '1720ms' }}>
-                  <span className="chip chip-high">High</span>
-                  <div className="vuln-detail">
-                    <strong>Exposed Admin Port</strong>
-                    <code>gateway:8080 · no auth</code>
-                  </div>
-                </div>
-                <div className="vuln-item" style={{ '--item-delay': '1920ms' }}>
-                  <span className="chip chip-medium">Medium</span>
-                  <div className="vuln-detail">
-                    <strong>Weak TLS 1.1</strong>
-                    <code>api-server · downgrade risk</code>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            className="metrics-card panel-rise"
-            style={{ '--delay': '1640ms' }}
-            aria-label="Infrastructure metrics"
-          >
-            <span className="panel-kicker">Live Findings</span>
-            <div className="metric-row">
-              <span>Assets Discovered</span>
-              <b data-counter="42" ref={(el) => (counterRefs.current[3] = el)}>0</b>
-            </div>
-            <div className="metric-row critical">
-              <span>Critical Findings</span>
-              <b data-counter="3" ref={(el) => (counterRefs.current[4] = el)}>0</b>
-            </div>
-            <div className="metric-row">
-              <span>Open Ports</span>
-              <b data-counter="18" ref={(el) => (counterRefs.current[5] = el)}>0</b>
-            </div>
-          </div>
-
-          <p className="caption reveal-up" style={{ '--delay': '2060ms' }}>
-            CyfroAgent continuously scans live infrastructure
-          </p>
         </div>
       </div>
     </section>

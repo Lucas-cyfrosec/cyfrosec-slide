@@ -20,116 +20,106 @@ export default function Scene1({ state }) {
               </svg>
             </div>
             <div className="dev-info">
-              <span className="dev-name">Alex Chen</span>
+              <span className="dev-name">Anna — Backend Developer</span>
               <span className="dev-status">
                 <i className="typing-dot" />
-                Scripting...
+                Building auth service...
               </span>
             </div>
-            <span className="status-pill info">IDE Active</span>
+            <span className="status-pill info">NexaBank · IDE Active</span>
           </div>
 
           <div className="scene-title reveal-up" style={{ '--delay': '240ms' }}>
-            <h2>CyfroCode catches vulnerabilities before they ship</h2>
+            <h2>Coding fast to meet the deadline</h2>
             <p>
-              Security checks run inline with your IDE and CI pipeline, surfacing risks
-              as you write and generating suggested patches for manual review.
+              Anna is building a new customer authentication service. She moves fast under
+              deadline pressure — and unknowingly introduces a critical vulnerability.
             </p>
           </div>
 
           <div
             className="editor-panel floating-card panel-rise"
             style={{ '--delay': '420ms' }}
-            aria-label="Large code editor mockup"
+            aria-label="Code editor mockup"
           >
             <div className="window-bar">
               <span className="dot red" />
               <span className="dot amber" />
               <span className="dot green" />
-              <span className="file-pill">routes/login.js</span>
+              <span className="file-pill">auth/login.py</span>
               <div className="editor-meta">
-                <span className="status-pill info">Scanning</span>
+                <span className="status-pill info">Scripting</span>
               </div>
             </div>
             <div className="code-body">
               <div className="scan-sweep" aria-hidden="true" />
               <div className="code-line">
-                <span className="num">14</span>
-                <span className="code-text" style={{ '--type-delay': '760ms' }}>
-                  <span className="token-green">app</span>.
-                  <span className="token-orange">post</span>(
-                  <span className="token-gray">'/login'</span>,{' '}
-                  <span className="token-purple">function</span> (req, res) {'{'}
+                <span className="num">10</span>
+                <span className="code-text" style={{ '--type-delay': '600ms' }}>
+                  <span className="token-purple">def</span>{' '}
+                  <span className="token-blue">authenticate_user</span>(user_input):
                 </span>
               </div>
               <div className="code-line">
-                <span className="num">15</span>
-                <span className="code-text" style={{ '--type-delay': '940ms' }}>
-                  &nbsp;&nbsp;<span className="token-purple">const</span>{' '}
-                  <span className="token-blue">username</span> = req.body.username;
+                <span className="num">11</span>
+                <span className="code-text" style={{ '--type-delay': '820ms' }}>
+                  &nbsp;&nbsp;<span className="token-gray"># connect to DB and run query</span>
                 </span>
               </div>
               <div className="code-line vulnerable">
-                <span className="num">16</span>
-                <span className="code-text" style={{ '--type-delay': '1120ms' }}>
-                  &nbsp;&nbsp;<span className="token-orange">sequelize.query</span>(
-                  <span className="token-gray">
-                    'SELECT * FROM Products WHERE name LIKE '
-                  </span>
-                  {' '}+ username);
+                <span className="num">12</span>
+                <span className="code-text" style={{ '--type-delay': '1040ms' }}>
+                  &nbsp;&nbsp;<span className="token-blue">query</span> ={' '}
+                  <span className="token-gray">"SELECT * FROM users WHERE email = '"</span>
+                  {' '}+{' '}
+                  <span className="token-orange">user_input</span>
+                  {' '}+{' '}
+                  <span className="token-gray">"'"</span>
                 </span>
               </div>
               <div className="code-line">
-                <span className="num">17</span>
-                <span className="code-text" style={{ '--type-delay': '1300ms' }}>
-                  {'}'})
+                <span className="num">13</span>
+                <span className="code-text" style={{ '--type-delay': '1260ms' }}>
+                  &nbsp;&nbsp;cursor.<span className="token-orange">execute</span>(query)
                 </span>
               </div>
               <div className="code-line">
-                <span className="num">18</span>
-                <span className="code-text" style={{ '--type-delay': '1480ms' }} />
-              </div>
-              <div className="code-line">
-                <span className="num">19</span>
-                <span className="code-text" style={{ '--type-delay': '1660ms' }}>
-                  <span className="token-orange">sequelize.query</span>(
-                </span>
-              </div>
-              <div className="code-line">
-                <span className="num">20</span>
-                <span className="code-text" style={{ '--type-delay': '1840ms' }}>
-                  &nbsp;&nbsp;<span className="token-gray">'SELECT * FROM Products WHERE name LIKE ?'</span>,
-                  {' '}{'{ '}replacements: [username]{' }{}'};
+                <span className="num">14</span>
+                <span className="code-text" style={{ '--type-delay': '1480ms' }}>
+                  &nbsp;&nbsp;<span className="token-purple">return</span>{' '}
+                  cursor.<span className="token-orange">fetchone</span>()
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="risk-badge">SQL injection risk · CWE-89</div>
+          <div className="risk-badge">SQL Injection risk · CWE-89</div>
 
           <div className="code-right">
             <div
               className="cyfrocode-card panel-rise"
-              style={{ '--delay': '2360ms' }}
-              aria-label="CyfroCode scan card"
+              style={{ '--delay': '2400ms' }}
+              aria-label="Vulnerability context"
             >
-              <span className="panel-kicker">CyfroCode</span>
+              <span className="panel-kicker">Risk Summary</span>
               <div className="module-title">
-                <span className="module-logo">Patch Generation</span>
-                <span className="status-pill info">Suggested</span>
+                <span className="module-logo">Unprotected Query</span>
+                <span className="status-pill error">Critical</span>
               </div>
               <div className="scan-copy">
-                Patch generated for unsafe Sequelize query. Review and apply the
-                suggested fix to use parameterized replacements.
+                String concatenation directly into SQL allows any attacker-controlled
+                input to manipulate the query and access the entire users table.
               </div>
               <div className="progress-track" aria-hidden="true" />
-              <div className="remediation-chip">Patch ready to apply</div>
+              <div className="remediation-chip" style={{ background: 'rgba(255,90,95,0.12)', borderColor: 'rgba(255,90,95,0.24)', color: '#ffd3d5' }}>
+                No input validation · No parameterization
+              </div>
             </div>
 
             <div
               className="deploy-card reveal-up"
-              style={{ '--delay': '3440ms' }}
-              aria-label="Deploy to Server"
+              style={{ '--delay': '3200ms' }}
+              aria-label="Deadline pressure indicator"
             >
               <div className="mini-server" aria-hidden="true">
                 <span />
@@ -137,22 +127,15 @@ export default function Scene1({ state }) {
                 <span />
               </div>
               <div className="deploy-text">
-                <strong>Deploy to Server</strong>
-                <small>Patch validated · Ready to push</small>
+                <strong>Release Deadline</strong>
+                <small>Shipping tonight · Under pressure</small>
               </div>
-              <div className="deploy-pulse" aria-hidden="true" />
+              <div className="deploy-pulse deploy-pulse-amber" aria-hidden="true" style={{ background: 'rgba(255,181,71,0.12)', borderColor: 'rgba(255,181,71,0.28)' }} />
             </div>
           </div>
 
-          <div className="code-connector" aria-hidden="true">
-            <svg viewBox="0 0 308 188">
-              <path d="M0 94 C80 94, 228 94, 308 94" />
-              <path className="draw" d="M0 94 C80 94, 228 94, 308 94" />
-            </svg>
-          </div>
-
-          <p className="caption reveal-up" style={{ '--delay': '4200ms' }}>
-            CyfroCode catches vulnerabilities and suggests patches for manual review
+          <p className="caption reveal-up" style={{ '--delay': '4000ms' }}>
+            Anna unknowingly ships a SQL Injection vulnerability into NexaBank's auth service
           </p>
         </div>
       </div>
