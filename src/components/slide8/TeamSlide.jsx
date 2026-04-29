@@ -78,7 +78,7 @@ const teamMembers = [
     image: maciejImg,
   },
   {
-    name: 'Sithu Kaung',
+    name: 'Kaung Sithu',
     country: 'Poland',
     role: 'Backend · AI',
     roleColor: 'cyan',
