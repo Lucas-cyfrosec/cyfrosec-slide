@@ -93,7 +93,7 @@ export default function Scene1({ state }) {
             </div>
           </div>
 
-          <div className="risk-badge">SQL Injection risk · CWE-89</div>
+          <div className="risk-badge">SQL Injection Risk</div>
 
           <div className="code-right">
             <div

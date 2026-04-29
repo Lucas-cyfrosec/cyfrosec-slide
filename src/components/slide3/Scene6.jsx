@@ -10,16 +10,16 @@ export default function Scene6({ state, riskScoreRef }) {
         <div className="scene-shell">
           <div className="scene-respond-layout">
             <div className="scene-label reveal-up" style={{ '--delay': '100ms' }}>
-              Autonomous Response
+              Remediation Suggestion
             </div>
 
             <div className="respond-columns">
               {/* Left: title + action recommendations */}
               <div className="respond-left">
                 <div className="scene-title respond-title reveal-up" style={{ '--delay': '200ms' }}>
-                  <h2>CyfroAgent responds and neutralises the threat</h2>
+                  <h2>CyfroAI Insights responds and neutralises the threat</h2>
                   <p>
-                    CyfroAgent intelligently recommends an upgrade, provides patch instructions,
+                    CyfroAI Insights intelligently recommends an upgrade, provides patch instructions,
                     and optionally triggers automated remediation — risk score collapses.
                   </p>
                 </div>
@@ -123,18 +123,18 @@ export default function Scene6({ state, riskScoreRef }) {
                   </div>
                   <div className="respond-metric">
                     <span>Time to Detect</span>
-                    <b>00:01</b>
+                    <b>4m 32s</b>
                   </div>
                   <div className="respond-metric">
                     <span>Time to Remediate</span>
-                    <b>08:34</b>
+                    <b>1h 47m</b>
                   </div>
                 </div>
               </div>
             </div>
 
             <p className="caption respond-caption reveal-up" style={{ '--delay': '3200ms' }}>
-              CyfroAgent responds intelligently — risk score drops from 86 to 28
+              CyfroAI Insights responds intelligently — risk score drops from 86 to 28
             </p>
           </div>
         </div>

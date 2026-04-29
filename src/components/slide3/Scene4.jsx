@@ -17,7 +17,7 @@ export default function Scene4({ state, counterRefs }) {
               {/* Left: title + monitoring domains */}
               <div className="runtime-left">
                 <div className="runtime-title reveal-up" style={{ '--delay': '200ms' }}>
-                  <h2>CyfroAgent activates across the live environment</h2>
+                  <h2>CyfroAgent scans the live environment</h2>
                   <p>
                     After deployment, CyfroAgent begins continuous agent-based monitoring
                     across three domains — system, network, and application layers.

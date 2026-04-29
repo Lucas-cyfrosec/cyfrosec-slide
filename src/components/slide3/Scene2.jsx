@@ -42,7 +42,7 @@ export default function Scene2({ state }) {
                     </div>
                     <div className="issue-item" style={{ '--item-delay': '1240ms' }}>
                       <span className="issue-icon">!</span>
-                      SQL Injection risk detected — CWE-89
+                      SQL Injection risk detected
                     </div>
                   </div>
 
