@@ -101,7 +101,7 @@ const teamMembers = [
     country: 'Thailand',
     role: 'Frontend',
     roleColor: 'blue',
-    description: ['Software Frontend Developer'],
+    description: ['Frontend and Cloud Developer'],
     image: waiYanPaingImg,
   },
 ]
